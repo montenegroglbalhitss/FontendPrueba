@@ -1,0 +1,6 @@
+<form [formGroup]="departamentosForm">
+    <label for="departamentosSelect">Selecciona un departamento:</label>
+    <select formControlName="selectedDepartamento" id="departamentosSelect">
+      <option *ngFor="let departamento of departamentos" [value]="departamento.id">{{ departamento.nombre }}</option>
+    </select>
+  </form>

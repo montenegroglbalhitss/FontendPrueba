@@ -1,0 +1,7 @@
+<form [formGroup]="cargosForm">
+    <label for="cargosSelect">Selecciona un cargo:</label>
+    <select formControlName="selectedCargo" id="cargosSelect">
+      <option   *ngFor="let cargo of cargos" [value]="cargo.id">{{ cargo.nombre }}</option>
+    </select>
+  </form>
+  
