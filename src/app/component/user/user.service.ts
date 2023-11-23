@@ -26,6 +26,7 @@ export class UserService {
   }
 
   updateUser(userId: number, userRequest: UserRequest): Observable<UserDto> {
+    console.log('data',userRequest);
     return this.http.put<UserDto>(`${this.API_URL}/users/${userId}`, userRequest);
   }
 

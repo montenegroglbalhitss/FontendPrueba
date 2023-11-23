@@ -1,16 +1,20 @@
 export interface UserDto {
     id: number;
     usuario: string;
+    email: string;
     primerNombre: string;
     segundoNombre: string;
     primerApellido: string;
     segundoApellido: string;
     idDepartamento: number;
     idCargo: number;
+    cargo:Cargo;
+    departamento:Departamento;
   }
   
   export interface UserRequest {
     usuario: string;
+    email: string;
     primerNombre: string;
     segundoNombre: string;
     primerApellido: string;

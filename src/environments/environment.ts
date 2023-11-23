@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    Server: 'http://localhost/backlaravel/public/api',
+    Server: 'http://localhost/PruebaBackend/public/api',
   };

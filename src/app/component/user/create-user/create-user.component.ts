@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserRequest } from '../Models/UserDto';
+import { Component, Inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { Cargo, Departamento, UserDto, UserRequest } from '../Models/UserDto';
 import { UserService } from '../user.service';
 import { CargoService } from '../../cargo/cargo.service';
 import { DepartamentoService } from '../../departamento/departamento.service';
  import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-user',
@@ -14,58 +15,111 @@ import {FormsModule} from '@angular/forms';
   styleUrls: ['./create-user.component.sass']
  })
 export class CreateUserComponent {
-cancelCreation() {
-throw new Error('Method not implemented.');
-}
-standalone:boolean= true;
-
-createUserForm: FormGroup;
-cargos: any[] = [];
-departamentos: any[] = [];
-  constructor(private fb: FormBuilder, private userService: UserService,
-    private cargoService: CargoService,
-    private departamentoService: DepartamentoService
-    ) {
-    this.createUserForm = this.fb.group({
-      usuario: ['', Validators.required],
-      primerNombre: ['', Validators.required],
-      segundoNombre: [''],
-      primerApellido: ['', Validators.required],
-      segundoApellido: [''],
-      idDepartamento: ['', Validators.required],
-      idCargo: ['', Validators.required]
-    });
-  }
-
-  ngOnInit(): void {
-    this.cargoService.getCargos().subscribe((cargos: any[]) => {
-      this.cargos = cargos; // Actualiza la lista de cargos
-    });
-
-    this.departamentoService.getDepartamentos().subscribe((departamentos: any[]) => {
-      this.departamentos = departamentos; // Actualiza la lista de departamentos
-    });
-  }
-
-  onSubmit(): void {
-    if (this.createUserForm.valid) {
-      const userData: UserRequest = this.createUserForm.value as UserRequest;
-      this.userService.createUser(userData).subscribe(
-        (response) => {
-          console.log('Usuario creado:', response);
-          // Aquí puedes manejar la lógica después de crear el usuario (por ejemplo, redireccionar)
-        },
-        (error) => {
-          console.error('Error al crear el usuario', error);
-          // Aquí puedes manejar el error de creación de usuario
-        }
-      );
-    } else {
-      console.error('Formulario inválido');
-      // Aquí puedes manejar el caso cuando el formulario no es válido
+  formAdministrador!:FormGroup;
+  departamentos:Departamento[] = [];
+  cargos:Cargo[] = [];
+  titulo:string = '';
+  loading:boolean = false;
+ 
+    constructor(
+       public dialogRef: MatDialogRef<CreateUserComponent>,
+      // private queryManagement:QueryManagementService,
+      private cargoService: CargoService,
+      private departamentoService: DepartamentoService,
+      @Inject(MAT_DIALOG_DATA) public data: any,
+    ){
+      this.buildForm();
+      this.getDepartamentos();
+      this.getCargos();
     }
-  }
+ 
+    ngOnInit(): void {
+      console.log('data',this.data.data);
+      if(this.data.data){
+        this.titulo = 'Editar usuario';
+        this.pathValueToForm();
+      }else{
+        this.titulo = 'Registrar usuario';
+      }
+    }
+ 
+    pathValueToForm(){
+      const dataUsuario:UserDto = this.data.data;
+      this.formAdministrador.patchValue({
+        id:dataUsuario.id,
+        usuario: dataUsuario.usuario,
+        primerNombre: dataUsuario.primerNombre,
+        segundoNombre: dataUsuario.segundoNombre,
+        primerApellido: dataUsuario.primerApellido,
+        email: dataUsuario.email,
+        segundoApellido: dataUsuario.segundoApellido,
+        idDepartamento: dataUsuario.idDepartamento,
+        idCargo: dataUsuario.idCargo,
+      });
+    }
+ 
+    buildForm(){
+      this.formAdministrador = new FormGroup({
+        id: new FormControl(null) ,
+        usuario: new FormControl(null, [Validators.required]) ,
+        primerNombre: new FormControl(null, [Validators.required]) ,
+        segundoNombre: new FormControl(null, [Validators.required]) ,
+        primerApellido: new FormControl(null, [Validators.required]) ,
+        segundoApellido: new FormControl(null, [Validators.required]) ,
+        idDepartamento: new FormControl(null, [Validators.required]) ,
+        email: new FormControl(null, [Validators.required]),
+        idCargo: new FormControl(null, [Validators.required]),
+      });
+    }
+ 
+    getDepartamentos(){
+      this.loading = true;
+      this.departamentoService.getDepartamentos()
+      .subscribe({
+        next: (res): void => {
+            this.departamentos = res;
+        },
+        error: (error): void => {
+          console.log(error);
+          this.loading = false;
+        },
+        complete: (): void => {
+          this.loading = false;
+        }
+      });
+    }
+ 
+    getCargos(){
+      this.loading = true;
+      this.cargoService.getCargos()
+      .subscribe({
+        next: (res): void => {
+            this.cargos = res;
+        },
+        error: (error): void => {
+          console.log(error);
+          this.loading = false;
+        },
+        complete: (): void => {
+          this.loading = false;
+        }
+      });
+    }
+ 
+ 
+    update(){
+     
+      this.dialogRef.close(this.formAdministrador?.value);
+    }
+ 
+    create(){
+      if(this.formAdministrador.valid){
+        this.dialogRef.close(this.formAdministrador?.value);
+      }
+    }
+ 
+    close(){
+      this.dialogRef.close();
+    }
 
-
-  
 }

@@ -1,1 +1,31 @@
-<p>header-layout works!</p>
+ 
+
+<ng-container>
+    <div>
+      <!-- Contenido -->
+    </div>
+    <p>Modulo de Administración</p>
+    <h1>Administración de Usuarios</h1>
+
+    <div class="select-fields">
+        <div>
+            <mat-form-field>
+                <mat-label>Seleccione un Departamento</mat-label>
+                <mat-select>
+                </mat-select>
+            </mat-form-field>
+            
+            <mat-form-field>
+                <mat-label>Seleccione un Cargo</mat-label>
+                <mat-select>
+                </mat-select>
+            </mat-form-field>        
+        </div>
+            
+        <button class="bt-create" mat-raised-button (click)="createUser()">Crear nuevo usuario
+            
+        </button>
+          
+    </div>
+
+  </ng-container>

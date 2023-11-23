@@ -21,6 +21,12 @@ import { HeaderLayoutComponent } from './component/layout/header-layout/header-l
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatIconModule} from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './Services/dialog/dialog.component';
+
+
 
 @NgModule({
   declarations: [
@@ -29,12 +35,14 @@ import { MatInputModule } from '@angular/material/input';
     DepartamentoComponent,
     UserComponent,
     CreateUserComponent,
-    HeaderLayoutComponent
+    HeaderLayoutComponent,
+    DialogComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,MatDialogModule,
     HttpClientModule,
     MatTableModule,
+    MatDividerModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     MatSelectModule,
@@ -42,6 +50,7 @@ import { MatInputModule } from '@angular/material/input';
     MatFormFieldModule,
     MatIconModule,
     FormsModule,
+    MatCardModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
@@ -54,7 +63,13 @@ import { MatInputModule } from '@angular/material/input';
      MatFormFieldModule,
      MatExpansionModule,
     MatSelectModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTableModule,
+    MatIconModule,
+     MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+ 
   ],
   providers: [CargoService, DepartamentoService, UserService],
   bootstrap: [AppComponent]

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateUserComponent } from './component/user/create-user/create-user.component';
 
 @Component({
   selector: 'app-root',
@@ -12,4 +14,6 @@ export class AppComponent {
     { value: 'burger', viewValue: 'Burger' },
     // Otros elementos
   ];
+
+
 }
