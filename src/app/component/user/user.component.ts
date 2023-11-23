@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { UserService } from './user.service';
 import { UserDto, UserRequest } from './Models/UserDto';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,8 @@ import { DialogComponent } from 'src/app/Services/dialog/dialog.component';
 export class UserComponent implements OnInit, OnDestroy {
   private subscription: Subscription | undefined;
   private userRe: UserRequest|undefined;
+  @Input() isUpdateListUsers:boolean = false;
+
 
   dataSource: any[] = []; // Utiliza tu tipo de datos UserDto aquí
 
@@ -23,6 +25,17 @@ export class UserComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,public dialog: MatDialog) {
   } 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    for (let propName in changes) {
+      if(propName === 'isUpdateListUsers'){
+        if(this.isUpdateListUsers){
+          this.ngOnInit();
+        }
+      }
+    }
+  }
+  
 
 
   // Obtiene los encabezados personalizados para cada columna
@@ -89,7 +102,7 @@ export class UserComponent implements OnInit, OnDestroy {
     openDialogEdit(userId: any): void {
       const dialogRef = this.dialog.open(CreateUserComponent, {
         width: '50%',
-        height: '70%', // Definir la altura del modal, puede ser un valor en píxeles o porcentaje
+        height: '75%', // Definir la altura del modal, puede ser un valor en píxeles o porcentaje
 
         data: { data:userId}
       });

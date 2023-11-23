@@ -1,5 +1,5 @@
-<app-header-layout></app-header-layout>
+<app-header-layout (isUpdateListUsersEmitter)="getIsUpdateListUsers($event)"></app-header-layout>
 <mat-divider></mat-divider>
-<app-user></app-user>
+<app-user [isUpdateListUsers]="isUpdateListUsers"></app-user>
 
 <!-- <app-create-user></app-create-user> -->

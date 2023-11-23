@@ -12,12 +12,18 @@
             <mat-form-field>
                 <mat-label>Seleccione un Departamento</mat-label>
                 <mat-select>
+                    <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
+                        {{ departamento.nombre }}
+                      </mat-option>
                 </mat-select>
             </mat-form-field>
             
             <mat-form-field>
                 <mat-label>Seleccione un Cargo</mat-label>
                 <mat-select>
+                    <mat-option *ngFor="let cargo of cargos" [value]="cargo.id">
+                        {{ cargo.nombre }}
+                      </mat-option>
                 </mat-select>
             </mat-form-field>        
         </div>

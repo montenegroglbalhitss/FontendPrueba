@@ -15,5 +15,12 @@ export class AppComponent {
     // Otros elementos
   ];
 
+  isUpdateListUsers:boolean = false;
+
+
+  getIsUpdateListUsers(event:boolean){
+    this.isUpdateListUsers = event;
+  }
+
 
 }

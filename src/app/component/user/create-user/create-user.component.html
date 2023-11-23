@@ -14,7 +14,7 @@
       <div class="row m-2 ">
         <div class="col-md-6 col-lg-6 ">
           <mat-form-field class="full-width">
-            <mat-label>Departamento</mat-label>
+            <mat-label>Seleccione un Departamento</mat-label>
             <mat-select formControlName="idDepartamento">
               <mat-option *ngFor="let departamento of departamentos" [value]="departamento.id">
                 {{ departamento.nombre }}
@@ -25,7 +25,7 @@
  
         <div class="col-md-6 col-lg-6 ">
           <mat-form-field class="full-width">
-            <mat-label>Cargo</mat-label>
+            <mat-label>Seleccione un Cargo</mat-label>
             <mat-select formControlName="idCargo">
               <mat-option *ngFor="let cargo of cargos" [value]="cargo.id">
                 {{ cargo.nombre }}
